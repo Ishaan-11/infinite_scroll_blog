@@ -1,6 +1,7 @@
 const filter = document.getElementById('filter'),
   postsContainer = document.getElementById('posts-container'),
-  loader = document.querySelector('.loader');
+  loader = document.querySelector('.loader'),
+  resultHeading = document.getElementById('result-heading');
 
 
 let page = 1;
@@ -53,6 +54,9 @@ function filterPosts (e) {
 
   const posts = document.querySelectorAll('.post');
 
+  const postCount = posts.length;
+  let hiddenPostCount = 0;
+
   posts.forEach(post => {
     const title = post.querySelector('.post-title').innerText.toUpperCase();
     const body = post.querySelector('.post-body').innerText.toUpperCase();
@@ -61,8 +65,15 @@ function filterPosts (e) {
       post.style.display = 'flex';
     } else {
       post.style.display = 'none';
+      hiddenPostCount++;
     }
   });
+
+  if (hiddenPostCount === postCount) {
+    resultHeading.innerHTML = `<p>There are no search results. Try again!<p>`;
+  } else {
+    resultHeading.innerHTML = '';
+  }
 }
 
 // Show initial posts
